@@ -1,6 +1,6 @@
-var expect = require('chai').expect
+var expect = require('chai').expect,
     HunspellLineToWord = require('../lib/transformer').HunspellLineToWord,
-    StreamTest = require('streamtest')['v2'];
+    StreamTest = require('streamtest').v2;
 
 describe('HunspellLineToWord', function() {
    describe('extractWordFromHunspellLine()', function() {

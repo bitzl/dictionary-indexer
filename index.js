@@ -53,7 +53,7 @@ function main(stream, encoding, bulkSize) {
     .pipe(iconv.decodeStream(encoding))
     .pipe(byline.createStream())
     .pipe(filter(function(line) {
-      return !(line.startsWith('<') || line.startsWith('#') || line.length == 0 || (line.indexOf('.') > -1));
+      return !(line.startsWith('<') || line.startsWith('#') || line.length === 0 || (line.indexOf('.') > -1));
     }))
     .pipe(new transformer.HunspellLineToWord());
 
