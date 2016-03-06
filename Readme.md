@@ -1,5 +1,6 @@
 # Dictionary Indexer
 [![Build Status](https://travis-ci.org/bitzl/dictionary-indexer.svg?branch=master)](https://travis-ci.org/bitzl/dictionary-indexer)
+[![Dependency Status](https://gemnasium.com/bitzl/dictionary-indexer.svg)](https://gemnasium.com/bitzl/dictionary-indexer)
 
 Index a Hunspell dictionary to elasticsearch.
 
