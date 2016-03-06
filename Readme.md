@@ -21,12 +21,12 @@ Create index:
 
 Usage:
 
-  $ node index.js
-
-  Usage: index [options]
-
+    $ node index.js
+    
+    Usage: index [options]
+    
     Options:
-
+    
       -h, --help                  output usage information
       -V, --version               output the version number
       -f, --file <file>           Download source from URL.
