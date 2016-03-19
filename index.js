@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-var commander = require('commander'),
+const commander = require('commander'),
     elasticsearch = require('elasticsearch'),
-    filter = require("stream-filter"),
+    filter = require('stream-filter'),
     fs = require('fs'),
     byline = require('byline'),
     indexing = require('./lib/indexing'),
@@ -21,30 +21,26 @@ commander
 if (commander.file) {
   var stream = fs.createReadStream(commander.file);
   main(stream, commander.encoding, commander.bulkSize);
-}
-else if (commander.url) {
+} else if (commander.url) {
   var http;
   if (commander.url.startsWith('https')) {
     http = require('https');
-  }
-  else {
+  } else {
     http = require('http');
   }
-  http.get(commander.url, function(response) {
+  http.get(commander.url, function (response) {
     main(response, commander.encoding, commander.bulkSize);
   });
-}
-else {
+} else {
   commander.help();
 }
-
 
 function main(stream, encoding, bulkSize) {
 
   // var client = new indexing.ConsoleClient();
   var client = new elasticsearch.Client({
-      host: 'localhost:9200',
-      log: 'info'
+    host: 'localhost:9200',
+    log: 'info',
   });
 
   var indexer = new indexing.Indexer(client, 'words', 'word');
@@ -52,14 +48,14 @@ function main(stream, encoding, bulkSize) {
   var domainStream = stream
     .pipe(iconv.decodeStream(encoding))
     .pipe(byline.createStream())
-    .pipe(filter(function(line) {
+    .pipe(filter(function (line) {
       return !(line.startsWith('<') || line.startsWith('#') || line.length === 0 || (line.indexOf('.') > -1));
     }))
     .pipe(new transformer.HunspellLineToWord());
 
   var performanceMeter = new util.PerformanceMeter();
 
-  domainStream.on('data', function(domain) {
+  domainStream.on('data', function (domain) {
     if (indexer.bufferedItems() > bulkSize) {
       indexer.process();
       performanceMeter.round(indexer.total);
@@ -67,7 +63,7 @@ function main(stream, encoding, bulkSize) {
     indexer.add(domain);
   });
 
-  domainStream.on('end', function() {
+  domainStream.on('end', function () {
     indexer.process();
     client.close();
   });
