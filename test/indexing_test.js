@@ -17,7 +17,7 @@ describe('Indexer', function() {
        it('should add a indexing request.', function() {
          var indexer = new Indexer(null, 'testindex', 'testtype');
          indexer.add('a-nice-word');
-         expect(indexer.data[0]).to.deep.equal({ index: { _index: 'testindex', _type: 'testtype' } });
+         expect(indexer.data[0]).to.deep.equal({ create: { _index: 'testindex', _type: 'testtype', _id: 'a-nice-word' } });
        });
        it('should add a document containing the word.', function() {
          var indexer = new Indexer(null, 'testindex', 'testtype');
@@ -35,7 +35,7 @@ describe('Indexer', function() {
          for (var i = 0; i < itemCount; i++) {
            indexer.add('a-nice-word');
          }
-         indexer.index();
+         indexer.process();
          expect(client.data.body.length).to.equal(2 * itemCount);
        });
      });

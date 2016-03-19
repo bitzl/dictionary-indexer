@@ -61,14 +61,14 @@ function main(stream, encoding, bulkSize) {
 
   domainStream.on('data', function(domain) {
     if (indexer.bufferedItems() > bulkSize) {
-      indexer.index();
+      indexer.process();
       performanceMeter.round(indexer.total);
     }
     indexer.add(domain);
   });
 
   domainStream.on('end', function() {
-    indexer.index();
+    indexer.process();
     client.close();
   });
 }
