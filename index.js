@@ -2,7 +2,6 @@
 
 const commander = require('commander'),
     elasticsearch = require('elasticsearch'),
-    filter = require('stream-filter'),
     fs = require('fs'),
     byline = require('byline'),
     indexing = require('./lib/indexing'),
@@ -48,9 +47,7 @@ function main(stream, encoding, bulkSize) {
   var domainStream = stream
     .pipe(iconv.decodeStream(encoding))
     .pipe(byline.createStream())
-    .pipe(filter(function (line) {
-      return !(line.startsWith('<') || line.startsWith('#') || line.length === 0 || (line.indexOf('.') > -1));
-    }))
+    .pipe(transformer.filterValidLines)
     .pipe(new transformer.HunspellLineToWord());
 
   var performanceMeter = new util.PerformanceMeter();
