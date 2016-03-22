@@ -11,7 +11,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
-    "streamtest": "^1.2.1"
+    "streamtest": "^1.2.2"
   },
   "dependencies": {
     "byline": "^4.2.1",
